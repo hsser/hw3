@@ -1,47 +1,19 @@
 part of 'book_bloc.dart';
 
-class BookEvent extends Equatable {
+@immutable
+sealed class BookEvent {
   const BookEvent();
-
-  @override
-  List<Object> get props => [];
 }
 
-class LoadBooks extends BookEvent {
-  const LoadBooks();
+class LoadBooks extends BookEvent {}
 
-  @override
-  String toString() => 'LoadBooks';
-}
+class SortBooksByTitle extends BookEvent {}
 
-class SortBooksByTitle extends BookEvent {
-  const SortBooksByTitle();
-
-  @override
-  String toString() => 'SortBooksByTitle';
-}
-
-class SortBooksByAuthor extends BookEvent {
-  const SortBooksByAuthor();
-
-  @override
-  String toString() => 'SortBooksByAuthor';
-}
+class SortBooksByAuthor extends BookEvent {}
 
 class LoadBookDetail extends BookEvent {
   const LoadBookDetail(this.book);
   final Book book;
-
-  @override
-  List<Object> get props => [book];
-
-  @override
-  String toString() => 'LoadBookDetail { book: $book }';
 }
 
-class ReturnToBookList extends BookEvent {
-  const ReturnToBookList();
-
-  @override
-  String toString() => 'returnToBookList';
-}
+class ReturnToBookList extends BookEvent {}

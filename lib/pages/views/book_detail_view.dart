@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hw3/models/book.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hw3/pages/bloc/book_bloc.dart';
 import 'package:hw3/widgets/book_detail.dart';
 
 class BookDetailView extends StatelessWidget {
-  final Book book;
-  const BookDetailView({required this.book, super.key});
+  const BookDetailView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,9 @@ class BookDetailView extends StatelessWidget {
         backgroundColor: ThemeData().colorScheme.surface,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () {},
+          onPressed: () {
+            BlocProvider.of<BookBloc>(context).add(ReturnToBookList());
+          },
         ),
         title: const Text('Book Detail'),
         centerTitle: true,
@@ -25,7 +27,7 @@ class BookDetailView extends StatelessWidget {
           ),
         ],
       ),
-      body: BookDetail(book: book),
+      body: BookDetail(book: context.read<BookBloc>().selectedBook),
     );
   }
 }

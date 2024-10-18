@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hw3/models/book.dart';
+import 'package:hw3/pages/bloc/book_bloc.dart';
 
 class BookList extends StatelessWidget {
   final List<Book> books;
@@ -17,7 +19,10 @@ class BookList extends StatelessWidget {
                     left: books.indexOf(book) == 0 ? 20 : 10,
                   ),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      BlocProvider.of<BookBloc>(context)
+                          .add(LoadBookDetail(book));
+                    },
                     child: Image.network(
                       book.imageUrl,
                       width: 100,

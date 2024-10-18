@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:hw3/models/book.dart';
 
 part 'book_event.dart';
@@ -9,7 +10,8 @@ enum SortType { title, author }
 
 class BookBloc extends Bloc<BookEvent, BookState> {
   List<Book> books = [];
-  SortType sortType = SortType.title;
+  late Book selectedBook;
+  SortType sortType = SortType.author;
 
   BookBloc() : super(BooksLoading()) {
     on<LoadBooks>(_onLoadBooks);
@@ -19,34 +21,42 @@ class BookBloc extends Bloc<BookEvent, BookState> {
     on<ReturnToBookList>(_onReturnToBookList);
   }
 
-  void _onLoadBooks(LoadBooks event, Emitter<BookState> emit) {
+  void init() {
     books.clear();
-    // TODO: Replace the following code with a loop that creates 10 books
-    emit(BooksInitialLoaded(books));
+    books.addAll(List.generate(10, (index) => Book.createMockUser()));
+    add(SortBooksByAuthor());
+  }
+
+  void _onLoadBooks(LoadBooks event, Emitter<BookState> emit) {
+    emit(BooksListLoaded(List.from(books)));
   }
 
   void _onSortBooksByTitle(SortBooksByTitle event, Emitter<BookState> emit) {
+    emit(BooksLoading());
     sortType = SortType.title;
     books.sort((a, b) => a.title.compareTo(b.title));
-    emit(BooksSortedByTitle(List.from(books)));
+    emit(BooksListLoaded(List.from(books)));
   }
 
   void _onSortBooksByAuthor(SortBooksByAuthor event, Emitter<BookState> emit) {
+    emit(BooksLoading());
+    sortType = SortType.author;
     books.sort((a, b) => a.author.compareTo(b.author));
-    emit(BooksSortedByAuthor(List.from(books)));
+    Future.delayed(const Duration(seconds: 3));
+    emit(BooksListLoaded(List.from(books)));
   }
 
   void _onLoadBookDetail(LoadBookDetail event, Emitter<BookState> emit) {
     try {
-      final book = books.firstWhere((book) => book == event.book);
-      emit(BookDetailLoaded(book));
+      selectedBook = books.firstWhere((book) => book == event.book);
+      emit(BookDetailLoaded());
     } catch (e) {
-      emit(const BookLoadError(
+      emit(const BooksError(
           'Book not found')); // Handle the case where no book matches
     }
   }
 
   void _onReturnToBookList(ReturnToBookList event, Emitter<BookState> emit) {
-    emit(BooksInitialLoaded(List.from(books)));
+    emit(BooksListLoaded(List.from(books)));
   }
 }

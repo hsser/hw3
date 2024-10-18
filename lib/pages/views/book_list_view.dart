@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:hw3/widgets/book_list.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hw3/models/book.dart';
+import 'package:hw3/pages/bloc/book_bloc.dart';
+import 'package:hw3/widgets/book_list.dart';
 
 class BookListView extends StatelessWidget {
-  const BookListView({super.key});
+  const BookListView({required this.books, super.key});
+  final List<Book> books;
 
   @override
   Widget build(BuildContext context) {
-    // TODO:
-    final List<Book> books =
-        List.generate(10, (index) => Book.createMockUser());
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -45,14 +45,24 @@ class BookListView extends StatelessWidget {
                 const SizedBox(width: 10),
                 OutlinedButton(
                   style: ButtonStyle(
+                    backgroundColor:
+                        context.read<BookBloc>().sortType == SortType.author
+                            ? WidgetStateProperty.all(
+                                ThemeData().colorScheme.surfaceContainer)
+                            : null,
                     shape: WidgetStateProperty.all(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
+                        side: BorderSide(
+                          color: ThemeData().colorScheme.surfaceContainer,
+                        ),
                       ),
                     ),
                     foregroundColor: WidgetStateProperty.all(Colors.black),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    BlocProvider.of<BookBloc>(context).add(SortBooksByAuthor());
+                  },
                   child: const Text(
                     'Author',
                     style: TextStyle(
@@ -64,14 +74,24 @@ class BookListView extends StatelessWidget {
                 const SizedBox(width: 10),
                 OutlinedButton(
                   style: ButtonStyle(
+                    backgroundColor:
+                        context.read<BookBloc>().sortType == SortType.title
+                            ? WidgetStateProperty.all(
+                                ThemeData().colorScheme.surfaceContainer)
+                            : null,
                     shape: WidgetStateProperty.all(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
+                        side: BorderSide(
+                          color: ThemeData().colorScheme.surfaceContainer,
+                        ),
                       ),
                     ),
                     foregroundColor: WidgetStateProperty.all(Colors.black),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    BlocProvider.of<BookBloc>(context).add(SortBooksByTitle());
+                  },
                   child: const Text(
                     'Title',
                     style: TextStyle(
