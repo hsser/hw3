@@ -11,9 +11,9 @@ class SortBooksByTitle extends BookEvent {}
 
 class SortBooksByAuthor extends BookEvent {}
 
+class ReturnToBookList extends BookEvent {}
+
 class LoadBookDetail extends BookEvent {
   const LoadBookDetail(this.book);
   final Book book;
 }
-
-class ReturnToBookList extends BookEvent {}

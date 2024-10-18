@@ -21,7 +21,6 @@ class BooksLoading extends BookState {}
 
 class BooksError extends BookState {
   final String message;
-
   const BooksError(this.message);
 
   @override

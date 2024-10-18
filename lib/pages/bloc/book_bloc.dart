@@ -40,7 +40,6 @@ class BookBloc extends Bloc<BookEvent, BookState> {
   void _onSortBooksByAuthor(SortBooksByAuthor event, Emitter<BookState> emit) {
     sortType = SortType.author;
     books.sort((a, b) => a.author.compareTo(b.author));
-    Future.delayed(const Duration(seconds: 3));
     emit(BooksListLoaded(List.from(books)));
   }
 
