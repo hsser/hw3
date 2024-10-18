@@ -32,14 +32,12 @@ class BookBloc extends Bloc<BookEvent, BookState> {
   }
 
   void _onSortBooksByTitle(SortBooksByTitle event, Emitter<BookState> emit) {
-    emit(BooksLoading());
     sortType = SortType.title;
     books.sort((a, b) => a.title.compareTo(b.title));
     emit(BooksListLoaded(List.from(books)));
   }
 
   void _onSortBooksByAuthor(SortBooksByAuthor event, Emitter<BookState> emit) {
-    emit(BooksLoading());
     sortType = SortType.author;
     books.sort((a, b) => a.author.compareTo(b.author));
     Future.delayed(const Duration(seconds: 3));
@@ -48,7 +46,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
 
   void _onLoadBookDetail(LoadBookDetail event, Emitter<BookState> emit) {
     try {
-      selectedBook = books.firstWhere((book) => book == event.book);
+      selectedBook = event.book;
       emit(BookDetailLoaded());
     } catch (e) {
       emit(const BooksError(
