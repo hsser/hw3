@@ -1,6 +1,6 @@
 # hw3
 
-A new Flutter project.
+HW3 - Implement Bloc Pattern
 
 ## Getting Started
 
