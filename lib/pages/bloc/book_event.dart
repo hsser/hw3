@@ -5,6 +5,7 @@ sealed class BookEvent {
   const BookEvent();
 }
 
+// Define the events
 class LoadBooks extends BookEvent {}
 
 class SortBooksByTitle extends BookEvent {}

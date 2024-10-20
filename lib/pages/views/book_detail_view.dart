@@ -27,7 +27,8 @@ class BookDetailView extends StatelessWidget {
           ),
         ],
       ),
-      body: BookDetail(book: context.read<BookBloc>().selectedBook),
+      body: BookDetail(
+          book: context.read<BookBloc>().selectedBook), // Use the selected book
     );
   }
 }

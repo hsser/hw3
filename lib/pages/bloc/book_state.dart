@@ -7,6 +7,7 @@ class BookState extends Equatable {
   List<Object> get props => [];
 }
 
+// Define the states
 class BooksListLoaded extends BookState {
   const BooksListLoaded(this.books);
   final List<Book> books;

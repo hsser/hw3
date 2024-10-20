@@ -6,11 +6,12 @@ import 'package:hw3/models/book.dart';
 part 'book_event.dart';
 part 'book_state.dart';
 
+// Define the sort type
 enum SortType { title, author }
 
 class BookBloc extends Bloc<BookEvent, BookState> {
-  List<Book> books = [];
-  late Book selectedBook;
+  List<Book> books = []; // The list of books
+  late Book selectedBook; // The book that is selected
   SortType sortType = SortType.author;
 
   BookBloc() : super(BooksLoading()) {
@@ -21,12 +22,14 @@ class BookBloc extends Bloc<BookEvent, BookState> {
     on<ReturnToBookList>(_onReturnToBookList);
   }
 
+  // Initialize the list of books
   void init() {
     books.clear();
     books.addAll(List.generate(10, (index) => Book.createMockUser()));
     add(SortBooksByAuthor());
   }
 
+  // Event handlers
   void _onLoadBooks(LoadBooks event, Emitter<BookState> emit) {
     emit(BooksListLoaded(List.from(books)));
   }
