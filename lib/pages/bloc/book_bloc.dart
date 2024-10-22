@@ -14,8 +14,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
   late Book selectedBook; // The book that is selected
   SortType sortType = SortType.author;
 
-  BookBloc() : super(BooksLoading()) {
-    on<LoadBooks>(_onLoadBooks);
+  BookBloc() : super(BooksInitial()) {
     on<SortBooksByTitle>(_onSortBooksByTitle);
     on<SortBooksByAuthor>(_onSortBooksByAuthor);
     on<LoadBookDetail>(_onLoadBookDetail);
@@ -30,10 +29,6 @@ class BookBloc extends Bloc<BookEvent, BookState> {
   }
 
   // Event handlers
-  void _onLoadBooks(LoadBooks event, Emitter<BookState> emit) {
-    emit(BooksListLoaded(List.from(books)));
-  }
-
   void _onSortBooksByTitle(SortBooksByTitle event, Emitter<BookState> emit) {
     sortType = SortType.title;
     books.sort((a, b) => a.title.compareTo(b.title));

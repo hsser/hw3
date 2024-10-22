@@ -8,6 +8,8 @@ class BookState extends Equatable {
 }
 
 // Define the states
+class BooksInitial extends BookState {}
+
 class BooksListLoaded extends BookState {
   const BooksListLoaded(this.books);
   final List<Book> books;
@@ -17,8 +19,6 @@ class BooksListLoaded extends BookState {
 }
 
 class BookDetailLoaded extends BookState {}
-
-class BooksLoading extends BookState {}
 
 class BooksError extends BookState {
   final String message;

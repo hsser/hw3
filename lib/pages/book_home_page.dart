@@ -13,8 +13,9 @@ class BookHomePage extends StatelessWidget {
       child: BlocBuilder<BookBloc, BookState>(
         builder: (context, state) {
           switch (state) {
-            case BooksLoading _:
-              return const BookLoadingView();
+            case BooksInitial _:
+              return BookListView(
+                  books: BlocProvider.of<BookBloc>(context).books);
             case BooksListLoaded _:
               return BookListView(books: state.books);
             case BookDetailLoaded _:

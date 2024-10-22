@@ -6,8 +6,6 @@ sealed class BookEvent {
 }
 
 // Define the events
-class LoadBooks extends BookEvent {}
-
 class SortBooksByTitle extends BookEvent {}
 
 class SortBooksByAuthor extends BookEvent {}
